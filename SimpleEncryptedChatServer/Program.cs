@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using UdpEncryptedMessageSenderLibrary;
 
 namespace SimpleEncryptedChatServer
 {
@@ -9,13 +10,14 @@ namespace SimpleEncryptedChatServer
         static void Main(string[] args)
         {
 			Console.WriteLine("Server Starting");
+			var encryption = new Encryption();
 			while (true)
 			{
 				using (var client = new UdpClient(9000))
 				{
 					var ipEndPoint = new IPEndPoint(IPAddress.Any, 0);
 					Byte[] receivedBytes = client.Receive(ref ipEndPoint);
-					string message = System.Text.Encoding.ASCII.GetString(receivedBytes);
+					string message = encryption.Decrypt(receivedBytes);
 					Console.WriteLine($"Message received: {message}");
 				}
 			}
