@@ -9,6 +9,7 @@ namespace SimpleEncryptedChatServer
         static void Main(string[] args)
         {
 			Console.WriteLine("Server Starting");
+			
 			while (true)
 			{
 				using (var client = new UdpClient(9000))
